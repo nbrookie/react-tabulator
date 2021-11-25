@@ -55,8 +55,10 @@ export default class extends React.Component<IProps, Partial<IState>> {
       // },
       ...options // props.options are passed to Tabulator's options.
     });
+    if(typeof that.props.options.cellEdited === 'function')
+      instance.on('cellEdited', that.props.options.cellEdited)
     instance.on('tableBuilding', function () {
-      that.table = this; // keep the table instance.
+      that.table = instance;
       that.props.tableBuilding ? that.props.tableBuilding() : '';
     });
     instance.on('dataLoaded', function () {
